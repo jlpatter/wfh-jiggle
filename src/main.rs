@@ -35,14 +35,16 @@ fn main() {
         })
         .map(NonZeroU64::get)
         .unwrap_or(10);
+    let mut delta = 1_i32;
 
     debug!("Sleep duration is set to {sleep_duration}s.");
     loop {
         let old_position = mouse_controller.get_position().unwrap();
         let new_position = Point {
-            x: old_position.x + 1,
-            y: old_position.y + 1,
+            x: old_position.x + delta,
+            y: old_position.y + delta,
         };
+        delta *= -1;
         debug!("Moving the mouse a tiny bit.");
         mouse_controller.move_to(new_position.x, new_position.y).unwrap();
         mouse_controller.move_to(old_position.x, old_position.y).unwrap();
